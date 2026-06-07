@@ -1,0 +1,31 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: redirect-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/linkforge}
+    username: ${SPRING_DATASOURCE_USERNAME:linkforge}
+    password: ${SPRING_DATASOURCE_PASSWORD:linkforge}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+
+linkforge:
+  click-topic: ${LINKFORGE_CLICK_TOPIC:url-click-events}
+  rate-limit:
+    max-requests: ${LINKFORGE_RATE_LIMIT_MAX_REQUESTS:600}
+    window-seconds: ${LINKFORGE_RATE_LIMIT_WINDOW_SECONDS:60}

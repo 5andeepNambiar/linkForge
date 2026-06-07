@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: analytics-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/linkforge}
+    username: ${SPRING_DATASOURCE_USERNAME:linkforge}
+    password: ${SPRING_DATASOURCE_PASSWORD:linkforge}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: ${LINKFORGE_ANALYTICS_GROUP_ID:analytics-service}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.linkforge.common.events
+        spring.json.value.default.type: com.linkforge.common.events.ClickEvent
+
+linkforge:
+  click-topic: ${LINKFORGE_CLICK_TOPIC:url-click-events}

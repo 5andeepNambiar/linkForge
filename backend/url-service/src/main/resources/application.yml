@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: url-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/linkforge}
+    username: ${SPRING_DATASOURCE_USERNAME:linkforge}
+    password: ${SPRING_DATASOURCE_PASSWORD:linkforge}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+
+linkforge:
+  public-base-url: ${LINKFORGE_PUBLIC_BASE_URL:http://localhost:8082}
+  node-id: ${LINKFORGE_NODE_ID:1}
+  rate-limit:
+    max-requests: ${LINKFORGE_RATE_LIMIT_MAX_REQUESTS:120}
+    window-seconds: ${LINKFORGE_RATE_LIMIT_WINDOW_SECONDS:60}
